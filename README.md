@@ -203,7 +203,6 @@ cgi-bin directory (e.g. /usr/lib/cgi-bin).
 
 ## License
 
-
 The MIT License (MIT)
 
 Copyright (c) 2016 Florian Kuhn
