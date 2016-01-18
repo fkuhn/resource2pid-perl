@@ -31,7 +31,8 @@ else {
 
 # trim item string
 chomp $item;
-# $item =~ s/^\s+|\s+$//g;
+# commented out
+$item =~ s/^\s+|\s+$//g;
 
 #***********************************
 # Retrieve handle pid of query item.
@@ -40,8 +41,8 @@ chomp $item;
 
 $handle_query= $handle_db->prepare(qq/SELECT pidurl FROM handles.handletable WHERE item = ? LIMIT 1/) or die "Couldn't prepare statement";
 
-$item_quoted = $handle_db->quote($item)
-
+$item_quoted = $handle_db->quote($item);
+# TODO: check if quoted item works correctly for AGD resources
 $handle_query->bind_param(1, $item_quoted);
 
 # execute the query with item as argument
@@ -57,4 +58,3 @@ while ($row = $handle_query->fetchrow_arrayref()) {
 # disconnect from db
 $handle_query->finish;
 $handle_db->disconnect;
-
