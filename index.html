@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <title>Resource2pid-perl by fkuhn</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Resource2pid-perl</h1>
+        <h2>Perl and CGI version of resource2pid to function with older server infrastructures</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/fkuhn/resource2pid-perl/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/fkuhn/resource2pid-perl/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/fkuhn/resource2pid-perl" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a id="resource2pid-version-10" class="anchor" href="#resource2pid-version-10" aria-hidden="true"><span class="octicon octicon-link"></span></a>resource2pid version 1.0</h1>
+
+<h2>
+<a id="a-script-collection-to-retrieve-handlenet-pids-for-ids-repository-resources" class="anchor" href="#a-script-collection-to-retrieve-handlenet-pids-for-ids-repository-resources" aria-hidden="true"><span class="octicon octicon-link"></span></a>A script collection to retrieve handle.net PIDs for IDS repository resources.</h2>
+
+<h2>
+<a id="date-jan-16-2016" class="anchor" href="#date-jan-16-2016" aria-hidden="true"><span class="octicon octicon-link"></span></a>Date: Jan 16 2016</h2>
+
+<h3>
+<a id="tested-os-environment" class="anchor" href="#tested-os-environment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tested OS Environment:</h3>
+
+<h4>
+<a id="os-and-software" class="anchor" href="#os-and-software" aria-hidden="true"><span class="octicon octicon-link"></span></a>os and software</h4>
+
+<p>ubuntu 15.10
+perl v5.20.2
+Apache/2.4.12 (Ubuntu)
+mysql  Ver 14.14 Distrib 5.6.27</p>
+
+<h4>
+<a id="perl-modules" class="anchor" href="#perl-modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>perl modules</h4>
+
+<p>DBI 1.634
+CGI 4.25</p>
+
+<h3>
+<a id="files" class="anchor" href="#files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Files</h3>
+
+<p>./resource2pid/
+ README.md</p>
+
+<p>backups/
+    dgdhandles_backup.csv
+    handles_backup.txt</p>
+
+<p>cgi/
+    retrieve_handle-csv.cgi
+    retrieve_handle-mysql.cgi</p>
+
+<p>cron/
+    handles2mysql.pl
+    handles2csv.pl</p>
+
+<p>data/
+    handles.csv
+    handles-raw.txt</p>
+
+<p>tool/
+    pid-cmdline-0.0.3.jar</p>
+
+<h3>
+<a id="file-description" class="anchor" href="#file-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>File Description</h3>
+
+<h4>
+<a id="cgi----cgi-scripts-for-repository-resource-to-handle-pid-mapping" class="anchor" href="#cgi----cgi-scripts-for-repository-resource-to-handle-pid-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>cgi -- cgi scripts for repository resource to handle pid mapping</h4>
+
+<ul>
+<li>retrieve_handle-csv.cgi: cgi query handling with handles stored in the csv file.</li>
+<li>retrieve_handles-mysql.cgi: cgi script for query handling of handles with mysql.</li>
+</ul>
+
+<h4>
+<a id="cron----scripts-that-need-to-be-run-periodically-with-cron" class="anchor" href="#cron----scripts-that-need-to-be-run-periodically-with-cron" aria-hidden="true"><span class="octicon octicon-link"></span></a>cron -- scripts that need to be run periodically with cron</h4>
+
+<ul>
+<li>handles2csv.pl: retrieve handles and write them to a csv file.</li>
+<li>handles2mysql.pl: retrieve handles and store them in a mysql db table.</li>
+</ul>
+
+<h4>
+<a id="data----data-used-by-the-csv-version-of-the-scripts" class="anchor" href="#data----data-used-by-the-csv-version-of-the-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>data -- data used by the csv version of the scripts</h4>
+
+<ul>
+<li>handles.csv: a handle to resource item mapping as comma separated file.</li>
+<li>handles_raw.txt: raw data of retrieved handles.</li>
+</ul>
+
+<h4>
+<a id="tool----the-command-line-tool-for-pid-retrieval" class="anchor" href="#tool----the-command-line-tool-for-pid-retrieval" aria-hidden="true"><span class="octicon octicon-link"></span></a>tool -- the command line tool for pid retrieval</h4>
+
+<ul>
+<li>pid-cmdline-0.0.3.jar: java jar of the command line tool needed to retrieve 
+handle pids. its called in both handles2csv.pl and handles2mysql.pl </li>
+</ul>
+
+<h4>
+<a id="backups----backups-of-the-csv-related-data-files" class="anchor" href="#backups----backups-of-the-csv-related-data-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>backups -- backups of the csv related data files</h4>
+
+<ul>
+<li>handles_backup.csv: backup of csv handle file</li>
+<li>handles-raw_backup.txt: backup of txt handle file </li>
+</ul>
+
+<h2>
+<a id="retrieve_handle-csvcgi" class="anchor" href="#retrieve_handle-csvcgi" aria-hidden="true"><span class="octicon octicon-link"></span></a>retrieve_handle-csv.cgi</h2>
+
+<p>Pass the dgd id of a resource in the webbrowser:
+http://hostname/cgi-bin/dgdhandles-csv.cgi?PF--_E_00001
+This finds the </p>
+
+<h2>
+<a id="retrieve_handle-mysqlcgi" class="anchor" href="#retrieve_handle-mysqlcgi" aria-hidden="true"><span class="octicon octicon-link"></span></a>retrieve_handle-mysql.cgi</h2>
+
+<p>This is the mysql version of dgdhandles-csv. instead of retrieving the
+correct handle.net pid of a dgd item from a csv file, the script consults
+a mysql database holding the same stock of information.
+The database is populated by calling the script <em>handles2mysql.pl</em>.
+It is strongly recommended to use this version.</p>
+
+<h2>
+<a id="installation-and-usage" class="anchor" href="#installation-and-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation and usage</h2>
+
+<h3>
+<a id="prerequisites-and-mysql" class="anchor" href="#prerequisites-and-mysql" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites and MySQL</h3>
+
+<ol>
+<li><p>Copy the contents of folders cgi/ and handles.csv found in data/ to your 
+cgi-bin directory (e.g. /usr/lib/cgi-bin). </p></li>
+<li>
+<p>Make sure the cgi files are executable for others, e.g.:</p>
+
+<pre><code>$chmod a+x retrieve_handle-mysql.cgi 
+</code></pre>
+</li>
+<li>
+<p>Define a mysql database and a handleuser and grant permissions and make
+sure the permissions take effect:
+You need to login to mysql as root (mysql -u root -p)</p>
+
+<p>mysql&gt; CREATE DATABASE handles;
+Query OK, 1 row affected (0,00 sec)</p>
+
+<p>mysql&gt; CREATE USER handleuser@localhost IDENTIFIED BY 'handlepassword';
+Query OK, 0 rows affected (0,04 sec)</p>
+
+<p>mysql&gt; GRANT ALL ON handles.* TO handleuser@localhost;
+Query OK, 0 rows affected (0,03 sec)</p>
+
+<p>mysql&gt; FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0,00 sec)</p>
+
+<p>mysql&gt; CREATE TABLE handles.handletable(
+    item VARCHAR(200) DEFAULT NULL,
+    pidurl VARCHAR(200) DEFAULT NULL);
+Query OK, 0 rows affected (0,35 sec)</p>
+
+<p>NOTE: This example user will only be accessible via localhost. You
+will have to change addresses accordingly if you need to access the
+user remotely.</p>
+</li>
+<li><p>Copy the contens of cron/ and tool/ to your preferred directory.
+The files pid-cmdline-0.0.3.jar and handles2mysql.pl must be located in the same directory
+Both files must be executable.</p></li>
+<li>
+<p>To initially populate the database and its table with values, call </p>
+
+<pre><code>$perl handles2mysql.pl
+</code></pre>
+</li>
+<li>
+<p>You can check if everything went well via logging in with 
+    mysql -u handleuser -p</p>
+
+<p>and call:</p>
+
+<pre><code>mysql&gt; USE handles;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+</code></pre>
+
+<p>and:</p>
+
+<pre><code>mysql&gt; SHOW TABLE STATUS;
+</code></pre>
+
+<p>which should return something like:
++-------------+--------+---------+------------+-------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+| Name        | Engine | Version | Row_format | Rows  | Avg_row_length | Data_length | Max_data_length | Index_length | Data_free | Auto_increment | Create_time         | Update_time | Check_time | Collation         | Checksum | Create_options | Comment |
++-------------+--------+---------+------------+-------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+| handletable | InnoDB |      10 | Compact    | 35196 |            223 |     7880704 |               0 |            0 |   4194304 |           NULL | 2016-01-13 12:45:33 | NULL        | NULL       | latin1_swedish_ci |     NULL |                |         |
++-------------+--------+---------+------------+-------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+-------------+------------+-------------------+----------+----------------+---------+
+1 row in set (0,01 sec)</p>
+
+<p>return to your terminal with "exit"</p>
+</li>
+</ol>
+
+<h3>
+<a id="enable-and-test-cgi" class="anchor" href="#enable-and-test-cgi" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enable and test CGI</h3>
+
+<ol>
+<li><p>If not done before, you will have to enable cgi (with perl)for your apache2 
+webserver.</p></li>
+<li><p>How to activate the apache2 webserver cgi and perl modules on ubuntu:
+    $sudo a2enmod cgi
+    $sudo a2enmod perl</p></li>
+<li>
+<p>Restart your Apache Webserver:</p>
+
+<pre><code>$ sudo service apache2 restart
+</code></pre>
+</li>
+<li>
+<p>For this example installation, you should now be able to open a browser window
+and enter a query url, for example:</p>
+
+<pre><code>http://localhost/cgi-bin/retrieve_handle-mysql.cgi?item=http://repos.ids-mannheim.de/fedora/objects/clarind-ids:mkhz.000066/datastreams/JPEG/content
+</code></pre>
+
+<p>The value of the "item" cgi-parameter is the resource-uri of an item in the database.
+Submitting this query should simply return </p>
+
+<pre><code>http://hdl.handle.net/10932/00-017B-E105-ACD8-1101-B 
+</code></pre>
+
+<p>which points to exactly the same resource via persistent identifier.</p>
+</li>
+</ol>
+
+<h3>
+<a id="enable-cron-to-schedule-handle-pid-updates" class="anchor" href="#enable-cron-to-schedule-handle-pid-updates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enable cron to schedule handle pid updates</h3>
+
+<ol>
+<li>
+<p>To make the script handles2mysql.pl update all handle pids frequently
+you can define a cronjob. For example, if you want the script to be
+called once a week, define a schedule with:</p>
+
+<pre><code>crontab -e 
+</code></pre>
+
+<p>and choose your editor.
+edit the opened file by adding the job in the crontab format, e.g.:</p>
+
+<pre><code>0 5 * * mon perl /path/to/script/handles2mysq.pl
+</code></pre>
+
+<p>will execute the script every monday at 5am. </p>
+</li>
+</ol>
+
+<h2>
+<a id="known-issues" class="anchor" href="#known-issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Known Issues</h2>
+
+<ul>
+<li>URIs of AGD Resource are not found. MySQL query string issue.</li>
+</ul>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
