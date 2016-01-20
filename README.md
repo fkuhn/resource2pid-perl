@@ -197,7 +197,10 @@ cgi-bin directory (e.g. /usr/lib/cgi-bin).
 
 
 ## Known Issues
-* URIs of AGD Resource are not found. MySQL query string issue.
+* URIs of AGD Resource use percentage notified symbols and must be submitted
+accordingly.
+ 
+
 
 
 
